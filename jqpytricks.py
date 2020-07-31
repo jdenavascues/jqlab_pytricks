@@ -6,6 +6,18 @@ import numpy as np
 import skimage.measure as skime
 from enthought.pyface.api import DirectoryDialog, OK
 
+#def find_filename_roots(folder):
+    # usar "regular expressions" library
+    #import re
+    #regex = re.compile('th.s')
+    #l = ['this', 'is', 'just', 'a', 'test']
+    #matches = [string for string in l if re.match(regex, string)]
+    
+    #or alternatively:
+    #import fnmatch
+    #lst = ['this','is','just','a','test']
+    #filtered = fnmatch.filter(lst, 'th?s')
+
 def CellCounterXML_reader(CellCounterXML_filepath):
 
     ''' this should be definitely better done with lxml library, however when
