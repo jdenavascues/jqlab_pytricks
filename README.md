@@ -4,4 +4,4 @@
 
 Here you will find a collection of some useful things I have (poorly) written myself or obtained from others (attributed).
 
-Mostly small stuff, useful for image analysis.
+Mostly small stuff, useful for image analysis, a couple of utilities for bioinformatics.
