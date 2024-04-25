@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 '''=============================================================================
 JQTRICKS contains basic functions I use for general purpose
 ============================================================================='''
@@ -5,18 +6,6 @@ JQTRICKS contains basic functions I use for general purpose
 import numpy as np
 import skimage.measure as skime
 from enthought.pyface.api import DirectoryDialog, OK
-
-#def find_filename_roots(folder):
-    # usar "regular expressions" library
-    #import re
-    #regex = re.compile('th.s')
-    #l = ['this', 'is', 'just', 'a', 'test']
-    #matches = [string for string in l if re.match(regex, string)]
-    
-    #or alternatively:
-    #import fnmatch
-    #lst = ['this','is','just','a','test']
-    #filtered = fnmatch.filter(lst, 'th?s')
 
 def CellCounterXML_reader(CellCounterXML_filepath):
 
@@ -153,22 +142,22 @@ def unique_rows(data):
     return uniq.view(data.dtype).reshape(-1, data.shape[1]), indices
 
 def getFolder():
-    '''
-GETFOLDER creates a GUI to obtain the path of the selected folder
-Author: Jonathan McKenzie: http://jonathanmackenzie.net/
-'''
+    '''GETFOLDER creates a GUI to obtain the path of the selected folder'''
     from os import getcwd
     # GUI for getting a sample filepath
     dialog = DirectoryDialog(action="open", default_path=getcwd())
     dialog.open()
     if dialog.return_code == OK:		
         folderpath=dialog.path
+    
     return folderpath
 
 def slice_boundingbox(BoundingBox):
     '''SLICE_BOUNDINGBOX obtains a slice object from the coordinates of a
     skimage.measure.regionprops Bounding Box'''
+    
     s = np.s_[BoundingBox[0]:BoundingBox[2],BoundingBox[1]:BoundingBox[3]]
+
     return s
         
 def normalize_img(img, bit_depth, bw=False):
@@ -227,9 +216,11 @@ def bwareaopen(bw, sz):
     
 def RGBshuffle(folderpath, ending, ch1, ch2, ch3):
     '''RGBSHUFFLE shuffles colour channels in an RGB image'''
+    
     import os
     import numpy as np
     import matplotlib.pyplot as pp
+    
     order = []
     for o in [ch1, ch2, ch3]:
         if o == 'R':
@@ -239,7 +230,9 @@ def RGBshuffle(folderpath, ending, ch1, ch2, ch3):
         elif o == 'B':
             x = 2
         order.append(x)
+    
     shuffle_list = [x for x in os.listdir(folderpath) if x.endswith(ending)]
+
     for s in shuffle_list:
         im = pp.imread(os.path.join(folderpath,s))
         if np.max(im)>255:
@@ -255,8 +248,6 @@ def RGBshuffle(folderpath, ending, ch1, ch2, ch3):
 
 def threshold_triangle(img,bit_depth):
     '''
----> NOW THIS IS AVAILABLE FROM SCIKIT-IMAGE! <---
-
     TRANSLATED FROM THE MATLAB UPLOAD BY B. PANNETON:
         
     Triangle algorithm
@@ -287,7 +278,9 @@ def threshold_triangle(img,bit_depth):
     St-Jean-sur-Richelieu, Qc, Canad
     bernard.panneton@agr.gc.ca
     '''
+    
     from skimage.exposure import histogram
+    
     try:
         bit_depth
         if bit_depth not in [8,16]:
@@ -299,12 +292,14 @@ def threshold_triangle(img,bit_depth):
     except:
         print 'The image will be considered as 8-bit.'
         num_bins=256
+    
     # Find maximum of histogram (h) and its location along the x axis (xmax)
     try:
         data = img.flatten().data[img.flatten().mask==True]
         [H,bin_centres]=(histogram(data,nbins = num_bins));
     except:
         [H,bin_centres]=(histogram(img.flatten(),nbins = num_bins));
+
     if len(H)<num_bins:
        num_bins = len(H)
        print '''................................................................................
@@ -329,6 +324,7 @@ num_bins will be reduced to reflect this.
     #indi=np.where(H>0)[0]
     fnz=indi[0]
     lnz=indi[-1]
+
     # Pick side as side with longer tail. Assume one tail is longer.
     lspan=xmax_idx-fnz
     rspan=lnz-xmax_idx
@@ -342,9 +338,11 @@ num_bins will be reduced to reflect this.
         isflip=0
         a=fnz
         b=xmax_idx+1
+    
     # Compute parameters of the straight line from first non-zero to peak
     # To simplify, shift x axis by a (bin number axis)
     m=h/(b-a)
+    
     # Compute distances
     x1=range((b-a).astype('int'))
     y1=H[x1+a]
@@ -355,12 +353,15 @@ num_bins will be reduced to reflect this.
     #plot(x2,y2,'gD-')
     #plot(x1,y1,'mo-')
     L=np.sqrt(np.square(y2-y1)+np.square(x2-x1))
+
     # Obtain threshold as the location of maximum L.    
     level=np.where(L==np.max(L))[0]
     level=a+np.mean(level)
+    
     # Flip back if necessary
     if isflip:
         level=num_bins-level+1
+
     return level
 
 def threshold_entropy(image, nbins=256):
