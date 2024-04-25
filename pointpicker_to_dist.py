@@ -1,18 +1,4 @@
 ###
-### GUI to open a folder
-###
-
-from enthought.pyface.api import DirectoryDialog, OK
-def getFolder():
-    '''GETFOLDER creates a GUI to obtain the path of the selected folder'''
-    # GUI for getting a sample filepath
-    dialog = DirectoryDialog(action="open", default_path='/Volumes/jd467/DATA/C O N F O C A L/ZEISS 700')
-    dialog.open()
-    if dialog.return_code == OK:		
-        folderpath=dialog.path 
-    return folderpath
-    
-###
 ### Get image data from exported MetaData
 ###
 
