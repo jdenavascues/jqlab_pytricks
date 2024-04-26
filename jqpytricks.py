@@ -244,7 +244,7 @@ def RGBshuffle(folderpath, ending, ch1, ch2, ch3):
         im = pp.imread(os.path.join(folderpath,s))
         if np.max(im)>255:
             raise ValueError('This image is not RGB 8-bit: ')
-            print s
+            print(s)
         else:
             im2 = np.ndarray(shape=im.shape, dtype = 'uint8')
             im2[:,:,0] = im[:,:,order[0]]
@@ -297,7 +297,7 @@ def threshold_triangle(img,bit_depth):
         else:
             num_bins = np.power(2,bit_depth)
     except:
-        print 'The image will be considered as 8-bit.'
+        print('The image will be considered as 8-bit.')
         num_bins=256
     # Find maximum of histogram (h) and its location along the x axis (xmax)
     try:
@@ -307,10 +307,10 @@ def threshold_triangle(img,bit_depth):
         [H,bin_centres]=(histogram(img.flatten(),nbins = num_bins));
     if len(H)<num_bins:
        num_bins = len(H)
-       print '''................................................................................
+       print('''................................................................................
 WARNING (jqtricks.threshold_triangle): Not all possible bins contain data,
 num_bins will be reduced to reflect this.
-''' 
+''')
     xmax_idx = np.where(H==np.max(H))[0]
     h = np.mean(H[xmax_idx])
     # LET'S ASSUME THERE IS ONLY ONE xmax_idx:
