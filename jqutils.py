@@ -514,7 +514,7 @@ def clique_data(source, marker_types):
         Y positions in an image, as produced by ImageJ CellCounter, or a pandas dataframe
         containing the same information a CellCounter txt file would.
     - marker_types : dataframe containing...
-        `marker_types` contains the correspondence between markers in `txtfile`...
+        `marker_types` contains the correspondence between markers in `source`...
         -- 'marker_type': integers
         -- 'GFP' or other molecular label : boolean
     - col : string naming a column in `marker_types` (default: 'GFP')
@@ -529,7 +529,7 @@ def clique_data(source, marker_types):
     - Numpy array (M,2) with labelled edges as pairs of indices of points in the triangulation.
     """    
     if os.path.isfile(source):
-        point_cloud = pd.read_table(txtfile, usecols=['Type', 'X', 'Y'])
+        point_cloud = pd.read_table(source, usecols=['Type', 'X', 'Y'])
     elif isinstance(source, pd.DataFrame):
         point_cloud = source
     else:
