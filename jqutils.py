@@ -494,7 +494,8 @@ def clique_celltypes(TXYdata, single, multiple, marker_types):
     clique_composition = pd.DataFrame(columns=cols, dtype=int)
     # find correspondence between Type (as integer) and Cell Type (string)
     # and count
-    marker_to_celltype = lambda x: marker_types[marker_types.marker_type==x].cell_type[0]
+    def marker_to_celltype(x):
+        return marker_types[marker_types.marker_type==x].cell_type[0]
     for c in type_cliques:
         t = list(map(marker_to_celltype, c))
         row = [len(t)] + [t.count(x) for x in celltypes_considered]
