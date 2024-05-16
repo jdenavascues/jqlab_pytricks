@@ -1148,8 +1148,9 @@ def extract_nuclear_pointcloud(dapi, px_size: float, xyd = None):
     gfp_mask[xyd[:,0], xyd[:,1]] = 1
     gfp_mask = skimo.binary_dilation(gfp_mask, skimo.disk(radius_thresh))
     centrim = centrim & ~gfp_mask
+    centrim = np.array(np.where(centrim)).T
     
-    return np.array(np.where(centrim)).T
+    return np.vstack([xyd, C])
     
     
 def threshold_triangle(img,bit_depth):
