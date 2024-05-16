@@ -528,7 +528,7 @@ def clique_data(source, marker_types):
     - Numpy array (N,) with the indices of points in the triangulation.
     - Numpy array (M,2) with labelled edges as pairs of indices of points in the triangulation.
     """    
-    if os.path.isfile(source):
+    if isinstance(source, str) and os.path.isfile(source):
         point_cloud = pd.read_table(source, usecols=['Type', 'X', 'Y'])
     elif isinstance(source, pd.DataFrame):
         point_cloud = source
