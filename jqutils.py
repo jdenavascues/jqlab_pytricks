@@ -495,7 +495,7 @@ def clique_celltypes(TXYdata, single, multiple, marker_types):
     # find correspondence between Type (as integer) and Cell Type (string)
     # and count
     marker_to_celltype = lambda x: marker_types[marker_types.marker_type==x].cell_type[0]
-    for c in complete_types:
+    for c in type_cliques:
         t = list(map(marker_to_celltype, c))
         row = [len(t)] + [t.count(x) for x in celltypes_considered]
         clique_composition.loc[len(clique_composition)] = row
