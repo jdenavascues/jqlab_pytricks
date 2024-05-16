@@ -566,7 +566,7 @@ txt file or the pandas DataFrame obtained from reading such a file.''')
         )
     )
     # get composition
-    clique_composition = clique_celltypes(TXYdata, single, multiple, marker_types)
+    clique_composition = clique_celltypes(TXYdata, singletons, cliques, marker_types)
     
     return (clique_composition, point_cloud, extD, singletons, cliques)
     
