@@ -523,15 +523,11 @@ def clique_data(source, marker_types):
     
     Returns
     -------
-    - Triangulation out of `pointcloud_utils.extended_delaunay()`.
+    - Triangulation out of `extended_delaunay()`.
     - A dataframe containing the size and cell type composition of the clones/clusters.
     - Numpy array (N,) with the indices of points in the triangulation.
     - Numpy array (M,2) with labelled edges as pairs of indices of points in the triangulation.
-    """
-    from pointcloud_utils import extended_delaunay
-    import pandas as pd
-    import numpy as np
-    
+    """    
     if os.path.isfile(source):
         point_cloud = pd.read_table(txtfile, usecols=['Type', 'X', 'Y'])
     elif isinstance(source, pd.DataFrame):
