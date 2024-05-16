@@ -1150,7 +1150,7 @@ def extract_nuclear_pointcloud(dapi, px_size: float, xyd = None):
     centrim = centrim & ~gfp_mask
     centrim = np.array(np.where(centrim)).T
     
-    return np.vstack([xyd, C])
+    return np.vstack([xyd, centrim])
     
     
 def threshold_triangle(img,bit_depth):
