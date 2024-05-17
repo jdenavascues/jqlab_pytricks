@@ -494,10 +494,9 @@ def clique_celltypes(TXYdata, single, multiple, marker_types):
     clique_composition = pd.DataFrame(columns=cols, dtype=int)
     # find correspondence between Type (as integer) and Cell Type (string)
     # and count
-    def marker_to_celltype(x):
-        return marker_types[marker_types.marker_type==x].cell_type[0]
     for c in type_cliques:
-        t = list(map(marker_to_celltype, c))
+        t = [marker_types[marker_types.marker_type==x].reset_index().cell_type[0]
+             for x in c]
         row = [len(t)] + [t.count(x) for x in celltypes_considered]
         clique_composition.loc[len(clique_composition)] = row
         
@@ -528,7 +527,7 @@ def clique_data(source, marker_types):
     - A dataframe containing the size and cell type composition of the clones/clusters.
     - Numpy array (N,) with the indices of points in the triangulation.
     - Numpy array (M,2) with labelled edges as pairs of indices of points in the triangulation.
-    """    
+    """
     if isinstance(source, str) and os.path.isfile(source):
         point_cloud = pd.read_table(source, usecols=['Type', 'X', 'Y'])
     elif isinstance(source, pd.DataFrame):
