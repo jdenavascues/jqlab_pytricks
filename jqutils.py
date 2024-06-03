@@ -168,16 +168,23 @@ def read_cellcounter_xml(source):
         > Y_Calibration: pixel size in the Y axis (usually the same as the X axis)
         > Z_Calibration: pixel size in the Z axis
         > Calibration_Unit (e.g. µm for micrometres, etc)
-        Depending on how the image was imported into ImageJ, CellCounte will not know
+        Depending on how the image was imported into ImageJ, CellCounter will not know
         the actual names of the axes, so it will assume that they come arranged like
-        XYZC (this is a guess). So, in 2D images with multiple time points, Z will be
-        time. In 2D images with multiple stage positions Z will be those positions.
+        XYZC (this is a guess). Presumably, in 2D images with multiple time points, Z
+        will be time. 
+        However, in 2D images with multiple stage positions, the value in the Z column
+        will correspond to (P-1) * no_C + C, with P being the 1-base index of the position,
+        no_C the number of channels, and C the channel where the position was recorded;
+        for instance, for an image with 20 positions and 3 channels, a marker recorded in
+        the 'blue' channel of the 5th position would have a Z value of (5-1)*3+3 = 15, so
+        that to retrieve the position integer, you need a floor division  (Z // no_C).
         I have not tried higher-dimensional images (XYZCTP) as these are very inconvenient
         to look through manually, but CellCounter XML files from those should return
         additional columns as required (in `image_props` as well as in `marker_pos`)
         'marker_pos' : pandas dataframe
         `marker_pos` contains the XYZTP positions for each marker, as well as the type of
-        marker identified.
+        marker identified. This will be listed in columns 'MarkerX', 'MarkerY', 'MarkerZ'
+        and 'Type'. See the description of `image_props` regarding the meaning of the Z value.
     """
     tree = ET.parse(source)
     xml_data = tree.getroot()
