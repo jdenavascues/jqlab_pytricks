@@ -1026,28 +1026,27 @@ def compare_cellcounters(P1, P2, RGB, root, colours=['tomato','lightskyblue'], f
         plt.scatter(P1[:,0], P1[:,1], marker='o', color = c0, alpha = 0.5, s = 30)
         plt.gca().add_collection(lines_D1)
         plt.axis([0,512,0,512]) 
-        plt.show()
         plt.savefig(root+'_P1')
+        plt.show()
     
         plt.figure(figsize=(fs,fs))
         plt.imshow(RGB)
         plt.scatter(P2[:,0], P2[:,1], marker='o', color = c1, alpha = 0.5, s = 15)
         plt.gca().add_collection(lines_D2)
         plt.axis([0,512,0,512]) 
-        plt.show()
         plt.savefig(root+'_P2')
-
-    plt.figure(figsize=(fs,fs))
-    plt.imshow(RGB)
+        plt.show()
+        
+    fig, ax = plt.figure(figsize=(fs,fs))
+    fig.imshow(RGB)
     # marker positions
     plt.scatter(P1[:,0], P1[:,1], marker='o', color = c0, alpha = 0.5, s = 30)
     plt.scatter(P2[:,0], P2[:,1], marker='o', color = c1, alpha = 0.3, s = 15)
-    plt.gca().add_collection(lines_D1c)
-    plt.gca().add_collection(lines_D2c)
+    ax.add_collection(lines_D1c)
+    ax.add_collection(lines_D2c)
     plt.axis([0,512,0,512]) 
+    fig.savefig(root+'_P1P2')
     plt.show()
-    plt.savefig(root+'_P1P2')
-
 
 """
 -----------------------------------------------------------------------------
